@@ -8,6 +8,16 @@ plugins:
   - serverless-aws-documentation
 
 provider:
+  tracing:
+    lambda: true
+    apiGateway: true
+    iamRoleStatements:
+      - Effect: 'Allow'            # Permissions
+        Action:
+          - 'xray:PutTraceSegments'   # Tracing permissions!
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'    
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
